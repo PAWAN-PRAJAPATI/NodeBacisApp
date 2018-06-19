@@ -1,7 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express.Router()
-const JSONStream = require('JSONStream')
 
 var appMongo = require("./appMongo")
 app.use(bodyParser.urlencoded())
@@ -28,15 +27,34 @@ function callbackUpdate(dbo,db_collection,req,res,next,err){
 
 function callbackConnect(collection,db,req,res,next,err){
 
-    console.log(req.body)
-    total = req.body
-    collection.insertMany(req.body.data,function(err,result){
-        if(err)throw err
-        console.log("Updated")
-        res.send(JSON.stringify({status:"Updated"}))
-        db.close()
-    })
+    collection.createIndex( { location: "2dsphere" } )
     
+    //console.log(req.body)
+    total = req.body
+    if(err){
+        res.send(JSON.stringify({status:"error1"}))
+        db.close()
+    }
+    //db.tollbooth.createIndex( { location: "2d" } )
+    //console.log(req.body)
+    total = req.body
+    if(err){
+        res.send(JSON.stringify({status:"error1"}))
+        db.close()
+    }
+    collection.insertMany(req.body.data,function(err,result){
+        if(err){
+            console.log(err)
+            res.send(JSON.stringify({status:"error2"}))
+            db.close()
+        }
+        else{
+            console.log("Updated")
+            res.send(JSON.stringify({status:"success"}))
+            db.close()
+        }
+    })
+    //next()
 }
 
 
