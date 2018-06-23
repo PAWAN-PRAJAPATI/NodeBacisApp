@@ -1,0 +1,55 @@
+- Properties [Commercial , Residential]
+
+- Units ( Individual Home/Office)
+
+- Tenants ()
+
+- Assets 
+
+- MaintenanceRequest -> Category
+
+- Employee/Vendor
+
+
+PropertyId - Name - Address
+
+UnitId , Foreign Key PropertyId, Number, TenantId Foreign Key
+
+TenantId, UnitId, Name, Email
+
+AssetId, AssetTypeid, UnitId, Description
+
+RequestId, UnitId, TenantId, AssetId (Optional Id), EmployeeId (Optional), Status
+>> Main Purpose - Track Maintenance Request
+
+AppointmentId, RequestId, DateTime, 
+
+
+
+CategoryMaster
+MaintenaceREquestCategory - EmployeeId
+
+getMaintenaceRequestList() - Filter Status Wise, Assingment Wise, Text Search (Property Name, Tenant Name, ) 
+
+getPropertyList()
+
+getTenantList(PropertyId)
+
+getAssetList(UnitId, PropertyId)
+
+getAssetCategory()
+
+getMyAppointments()
+
+createAppointment()
+
+createMaitenaceRequest()
+ - PropertyId, UnitId, Note, Photo Attachment,Category,  AssetId, Status, EmployeeId, 
+
+AssetTypes
+
+Tubelight, Electircal
+Fan, 
+
+
+

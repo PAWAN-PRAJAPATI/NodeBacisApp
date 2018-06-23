@@ -44,18 +44,6 @@ mongo(next)
 },(req,res,next)=>{
     console.log("books")
     notesMongo.find({title:"book1"},(data,req,res,next,err)=>{res.send(data)},req,res,next)
-    
-    //res.send("books");
-    /*
-    Book.getBooks(function(err, books){
-        console.log("books1")
-        if(err){
-            throw  err;
-        }
-        console.log("Hello")
-        res.send("books");
-    })
-    */
 });
 
 

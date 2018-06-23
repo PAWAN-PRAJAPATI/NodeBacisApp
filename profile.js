@@ -8,6 +8,7 @@ app.use(bodyParser.urlencoded())
 var notesMongo = new appMongo("user64","notes")
 
 
+
 function callbackInsert(data,req,res,next,err){
     if(err) res.send("Custom Error:\n"+err)
     else res.send("inserted at:"+data._id)
@@ -103,5 +104,34 @@ app.get('/update',(req,res,next)=>{
     res.send("Database updated")
     }
 )
+
+var Property = new appMongo("user64","Property")
+
+
+app.get('/lookup',(req,res,next)=>{
+    console.log("IN LOOKUP")
+    Property.connect(lookupcallback,req,res,next)
+})
+
+
+function lookupcallback(collection,db,req,res,next,err){
+    collection.aggregate([
+        {$match:{Address:"Monalisa BC"}},
+        { $lookup:
+           {
+             from: 'PropertyUnit',
+             localField: '_id',
+             foreignField: 'PropertyUnit',
+             as: 'Units'
+           }
+         }
+        ]).toArray(function(err, result) {
+        if (err) throw err;
+        //console.log((res));
+        res.send(result)
+        db.close();
+      });
+      //next()
+}
 
 module.exports = app
