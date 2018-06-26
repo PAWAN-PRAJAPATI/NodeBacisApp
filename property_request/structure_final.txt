@@ -18,7 +18,7 @@
   ->request
      ->r_id
      ->asset_id(optional)
-     ->asset_type
+     ->type
      ->e_id
      ->status
   ->assets
@@ -34,7 +34,7 @@
 ->employee
   ->e_id
   ->e_name
-  ->asset_type
+  ->type
   ->appointment
     ->a_id
     ->r_id

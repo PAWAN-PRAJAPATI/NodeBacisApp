@@ -303,7 +303,7 @@ function getTenantsList(Property_id,req,res,next){
     },req,res,next)
 }
 
-function getEmployee(asset_type){
+function getEmployee(asset_type,req,res,next){
     employee.connect((collection,db)=>{
         collection.find({asset_type:asset_type}).toArray(function(err,result){
             console.log(result)
@@ -319,7 +319,7 @@ app.get("/get_tenants",(req,res,next)=>{
 
 
 app.get("/get_emp",(req,res,next)=>{
-    getEmployee("Type_A")
+    getEmployee("Type_A",req,res,next)
 })
 
 

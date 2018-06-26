@@ -1,0 +1,54 @@
+
+
+-->Property
+    ->Name
+    ->id
+    ->type [commertial,reisdential]
+    ->Address
+
+-->PropertyUnit
+    ->id
+    ->Property_id
+    ->[Tanant_id,..]
+    ->Name
+    ->[Asset_id,..]
+    ->type [home, office]
+
+-->Tenant
+    ->id
+    ->PropertyUnit_id
+    ->Name
+    ->email
+
+-->Asset
+    ->id
+    ->type_id
+    ->PropertyUnit_id
+    ->description
+
+-->AssetType
+    ->id
+    ->Type Name
+
+-->Request
+    ->id
+    ->PropertyUnit_id
+    ->Tanant_id
+    ->Asset_id (/)
+    ->RequestType_id
+    ->status
+
+-->Appoinments
+    ->id
+    ->Request_id
+    ->Employ_id (auto-assign if not selected)
+    ->dataTime
+
+-->Employee
+    ->id
+    ->[RequestType_id,..]
+    ->[Request_id,..]
+
+-->RequestType
+    ->id
+    ->name
