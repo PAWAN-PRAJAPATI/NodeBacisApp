@@ -37,7 +37,7 @@ class appMongo{
         })  
     }
 
-    find(query,callback,req,res,next){
+    find(query,callback,req=null,res=null,next=null){
         var db_name = this.db
         var db_collection  = this.collection
         const MongoClient = this.MongoClient
@@ -90,7 +90,7 @@ class appMongo{
         });
     }
 
-    updateMany(callback,req,res,next){
+    updateMany(query,value,callback,req,res,next){
         var db_name = this.db
         var db_collection  = this.collection
         const MongoClient = this.MongoClient
@@ -128,6 +128,14 @@ class appMongo{
 
         })
 
+    }
+
+    insertMany(documents,callback,req,res,next){
+        this.connect((collection,db,req,res,next,err)=>{
+            collection.insertMany(documents,function(result,err){
+                callback(result,req,res,next,err)                
+            })
+        },req,res,next)
     }
 
 
