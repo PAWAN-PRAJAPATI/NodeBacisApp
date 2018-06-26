@@ -1,0 +1,42 @@
+->Property
+  ->p_id
+  ->units[uid]
+  ->p_name
+  ->p_address
+
+
+->unit
+  ->unit_id
+  ->p_id
+  ->name
+  ->blocks
+  ->tenant
+     ->tenant_id
+     ->t_name
+     ->email
+     ->contact
+  ->request
+     ->r_id
+     ->asset_id(optional)
+     ->asset_type
+     ->e_id
+     ->status
+  ->assets
+     ->asset_id
+     ->number
+
+->assets
+    ->asset_id
+    ->asset_name
+    ->asset_type
+
+
+->employee
+  ->e_id
+  ->e_name
+  ->asset_type
+  ->appointment
+    ->a_id
+    ->r_id
+    ->date_time
+
