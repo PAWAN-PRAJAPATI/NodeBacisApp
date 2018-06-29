@@ -303,13 +303,85 @@ function getTenantsList(Property_id,req,res,next){
     },req,res,next)
 }
 
-function getEmployee(asset_type,req,res,next){
+function getEmployee(callback,asset_type,date,time,req,res,next){
     employee.connect((collection,db)=>{
-        collection.find({asset_type:asset_type}).toArray(function(err,result){
-            console.log(result)
-            res.send(result)
+        //first match type 
+        //elemMatch iterate documents in array 
+        //so we compare date if data in ne to input date or if date in equal to input date then time must be not equal
+        collection.find({asset_type:asset_type,$or:[
+                        {apmt:{"$elemMatch":{
+                            $or:[
+                                {date:{$ne:date}},
+                                {date:date,time:{$ne:time}}]
+                                }
+                            }
+                        },
+                        //if apmt not exists
+                        {apmt:null}]
+
+                    }).toArray(function(err,result){
+                //console.log(result)
+                //res.send(result)
+                callback(result)
+            })
         })
-    })
+    
+}
+
+
+function createRequest(tanent_id,asset_type,unit_id,date,time,req,res,next){
+    getEmployee((result)=>{
+        var rand_emp =  result[Math.floor(Math.random() * result.length)]
+        var req_id = new ObjectID()
+        console.log(rand_emp)
+        property_unit_coll.connect((collection,db)=>{
+            //push requests in request in property_unit where id match
+            collection.findOneAndUpdate({_id:unit_id},{
+               $push: {request:{tanent_id:tanent_id,
+                request_id:req_id,
+                asset_type:asset_type,
+                date:date,
+                time:time,
+                status:"pending",
+                emp_id:rand_emp._id}}
+            },{new:true},(err,result)=>{
+                console.log("updated",result)
+                var emp_id = rand_emp._id
+                employee.connect((collection,db)=>{
+                    collection.findOneAndUpdate({_id:emp_id},{
+                        //addToSet is push with not duplicate
+                        $addToSet:{
+                            apmt:{
+                                _id:new ObjectID(),
+                                req_id:req_id,
+                                date:date,
+                                time:time,
+                                status:"pending"
+                            }
+                        }
+                    },(err,result)=>{
+                        console.log("apmt",result)
+                    })
+                })
+            })
+        },req,res,next)
+
+
+    },asset_type,date,time,req,res,next)
+    /*
+    property_unit_coll.connect((collection,db)=>{
+        collection.update({_id:unit_id},{
+           $push: {tanent_id:tanent_id,
+            asset_type:asset_type,
+            date:date,
+            time:time,
+            status:"pending",
+            emp_id:emp_id}
+        })
+    },req,res,next)
+    */
+
+
 }
 
 app.get("/get_tenants",(req,res,next)=>{
@@ -319,8 +391,17 @@ app.get("/get_tenants",(req,res,next)=>{
 
 
 app.get("/get_emp",(req,res,next)=>{
-    getEmployee("Type_A",req,res,next)
+    getEmployee((result)=>{
+        console.log("result:",result)
+    },"Type_A","26","morning",req,res,next)
 })
+
+app.get("/create_req",(req,res,next)=>{
+    var unit_id = new ObjectID("5b31e9ec5c024610a356d24b")
+
+    createRequest("QDMVC XQQSXSG ","Type_A",unit_id,"26","morning",req,res,next)
+})
+
 
 
 module.exports = app

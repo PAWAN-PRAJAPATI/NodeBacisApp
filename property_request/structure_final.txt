@@ -1,42 +1,50 @@
 ->Property
-  ->p_id
-  ->units[uid]
-  ->p_name
-  ->p_address
+    ->p_id
+    ->units[uid]
+    ->p_name
+    ->p_address
 
 
 ->unit
-  ->unit_id
-  ->p_id
-  ->name
-  ->blocks
-  ->tenant
-     ->tenant_id
-     ->t_name
-     ->email
-     ->contact
-  ->request
-     ->r_id
-     ->asset_id(optional)
-     ->type
-     ->e_id
-     ->status
-  ->assets
-     ->asset_id
-     ->number
+    ->unit_id
+    ->p_id
+    ->name
+    ->blocks
+    ->tenant
+        ->tenant_id
+        ->t_name
+        ->email
+        ->contact
+    ->requests[]
+        ->r_id
+        ->tenant_id
+        ->asset_id(optional)
+        ->data
+        ->time
+        ->type
+        ->e_id
+        ->status
+    ->assets
+        ->asset_id
+        ->number
 
 ->assets
-    ->asset_id
-    ->asset_name
-    ->asset_type
+      ->asset_id
+      ->asset_name
+      ->asset_type
 
 
 ->employee
-  ->e_id
-  ->e_name
-  ->type
-  ->appointment
-    ->a_id
-    ->r_id
-    ->date_time
-
+    ->e_id
+    ->e_name
+    ->type
+    ->status[]
+        ->date
+        ->morning(0/1)
+        ->afternoon(0/1)
+    ->appointment
+        ->a_id
+        ->r_id
+        ->date
+        ->time(morn/aft)
+        ->a_status
