@@ -2,6 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const property = require('./property')
+const dev = require('./dev')
+
 //const user = require('./user')
 //const model = require('./models')
 
@@ -17,6 +19,8 @@ app.use(function(req, res, next) {
 });
 
 app.use('/property',property)
+app.use('/dev',dev)
+
 //app.use('/user',user)
 //app.use('/models',model)
 

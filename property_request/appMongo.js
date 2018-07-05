@@ -7,7 +7,8 @@ class appMongo{
         this.db = db
         this.collection = collection
         //this.url = 'mongodb://vishwesh1010:vishwesh101025@ds163530.mlab.com:63530/driving'
-        this.url = 'mongodb://pawan64:feelsgood64@ds263590.mlab.com:63590/user64'
+        this.url = "mongodb://localhost:27017/local"
+        //this.url = 'mongodb://pawan64:feelsgood64@ds263590.mlab.com:63590/user64'
         this.MongoClient = require('mongodb').MongoClient;
         console.log("Initialize")
     }

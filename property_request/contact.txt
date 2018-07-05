@@ -1,0 +1,28 @@
+{
+    
+    "email":"vish@test.com", 
+    "phone":"+919898586409",
+    "fname":"Vish",
+    "lname":"Pat",
+    "addressline1":"D 117 Shiava, SOc", (0)
+    "addressline2":"Mainjlapu", (O)
+    "city":"vaodara", (O)
+    "state":"GJ", (O)
+    "country":"India", (O)
+    "zip":"65656", (O)
+    "photo":"<binary data>", (0)
+    "dob":"25-6-1986", (0)
+
+}
+
+//Insert()
+
+//Update()
+
+//Sync (email)
+
+
+//List Fname, Lname, Email, Phone (New)
+//Edit,  Details
+
+Web

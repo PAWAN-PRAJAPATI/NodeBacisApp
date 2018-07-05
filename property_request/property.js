@@ -51,7 +51,7 @@ app.post('/insert_tanent',(req,res,next)=>{
     })
 })
 
-function asset(){
+function asset(req,res,next){
     const asset_type = [{
         name:["Name_AA","Name_AB","Name_AC",'Name_AD','Name_AE','Name_AF'],
         type:"Type_A"
@@ -73,7 +73,7 @@ function asset(){
     for(var i = 0;i<20;i++ ){
         var name_l = Math.floor(Math.random() * asset_type[0].name.length);
         var type_l = Math.floor(Math.random() * asset_type.length);
-        l.push({name:asset_type[type_l].name[name_l],type:asset_type[type_l].type})
+        l.push({name:makeText(1),type:asset_type[type_l].type})
     }
 
     assets_coll.connect((collection,db,req,res,next,err)=>{
@@ -164,6 +164,7 @@ function createTenant(n){
     var l = []
     for(var i = 0; i < n; i++){
         var tanent = {
+            _id:new ObjectID(),
             Name:makeText(2),
             Contact:makeNumber(10),
             Email:makeText(1)+ "@gmail.com"
@@ -173,14 +174,14 @@ function createTenant(n){
     return l
 }
 
-function addTanentsToUnits(n,req,res,next){
+function addTanentsToUnits(n_u,n_t,req,res,next){
     assets_coll.find({},(assets_list)=>{
         property_unit_coll.find({},(units_list,req,res)=>{
             
-            for(var i = 0; i < n; i++){
+            for(var i = 0; i < n_u; i++){
                 var rand_assets = createAssets(assets_list)
                 var rand_unit = units_list[Math.floor(Math.random() * units_list.length)]
-                var tanents = createTenant(2)
+                var tanents = createTenant(n_t)
                 console.log(tanents)
                 console.log(rand_unit)
 
@@ -260,14 +261,16 @@ app.get('/create_units',(req,res,next)=>{
 })
 
 app.get('/create_tanents',(req,res,next)=>{
-    addTanentsToUnits(20,req,res,next)
+    addTanentsToUnits(50,1,req,res,next)
 })
 
 app.get('/lookup',(req,res,next)=>{
     console.log("IN LOOKUP")
     property_coll.connect(lookupcallback,req,res,next)
 })
-
+app.get("/create_assets",(req,res,next)=>{
+    asset()
+});
 app.get("/add_assets",(req,res,next)=>{
     addAssetsToUnits(10,req,res,next)
 })
